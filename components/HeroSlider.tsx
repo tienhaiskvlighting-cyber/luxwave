@@ -5,24 +5,24 @@ import { useState, useEffect } from 'react';
 const banners = [
   {
     image: '/images/banner-1.jpg',
-    title: 'Màn Hình LED COB',
+    title: 'Module LED BOE MLED',
     description: 'Công nghệ COB tiên tiến, hình ảnh sắc nét',
-    link: '/products?category=man-hinh-led',
+    link: '/products',
     cta: 'Xem chi tiết'
   },
   {
     image: '/images/banner-2.jpg', 
-    title: 'Thiết Bị Hiệu Ứng Stage',
-    description: 'Đèn sân khấu chính hãng, hiệu ứng đa dạng',
-    link: '/products?category=den-san-khau',
+    title: 'Giải Pháp LED Chuyên Nghiệp',
+    description: 'Từ module LED đến cabin LED COB cho mọi không gian',
+    link: '/products',
     cta: 'Xem chi tiết'
   },
   {
     image: '/images/banner-3.jpg',
-    title: 'Đèn Sân Khấu Chuyên Nghiệp',
-    description: 'Giải pháp chiếu sáng hoàn hảo cho mọi sự kiện',
-    link: '/products?category=den-san-khau',
-    cta: 'Xem chi tiết'
+    title: 'Dịch Vụ Thi Công & Bảo Trì',
+    description: 'Đội ngũ kỹ thuật chuyên nghiệp, hỗ trợ 24/7',
+    link: '/contact',
+    cta: 'Liên hệ ngay'
   }
 ];
 
