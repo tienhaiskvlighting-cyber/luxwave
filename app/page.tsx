@@ -1,8 +1,106 @@
 import Link from 'next/link';
-import { getProducts, getProjects, getCategories } from '@/lib/api';
+import { getProducts, getProjects } from '@/lib/api';
 import HeroSlider from '@/components/HeroSlider';
+import ProductCard from '@/components/ProductCard';
+import ProjectCard from '@/components/ProjectCard';
+import SolutionCard from '@/components/SolutionCard';
+import Breadcrumb from '@/components/Breadcrumb';
 
-// Premium mock news data
+// Categories data
+const categories = [
+  {
+    id: '1',
+    name: 'Màn hình LED',
+    slug: 'man-hinh-led',
+    icon: '📺',
+    description: 'Indoor, Outdoor, Transparent',
+    color: 'from-blue-600 to-blue-800',
+    href: '/products?category=man-hinh-led'
+  },
+  {
+    id: '2',
+    name: 'Module LED',
+    slug: 'module-led',
+    icon: '🔲',
+    description: 'COB, SMD Series',
+    color: 'from-green-600 to-green-800',
+    href: '/products?category=module-led'
+  },
+  {
+    id: '3',
+    name: 'Cabin LED',
+    slug: 'cabin-led',
+    icon: '📦',
+    description: 'COB Cabinet',
+    color: 'from-purple-600 to-purple-800',
+    href: '/products?category=cabin-led'
+  },
+  {
+    id: '4',
+    name: 'Đèn GOBO',
+    slug: 'den-gobo',
+    icon: '💡',
+    description: 'Chiếu logo, hiệu ứng',
+    color: 'from-amber-500 to-amber-700',
+    href: '/products?category=den-gobo'
+  },
+  {
+    id: '5',
+    name: 'Đèn sân khấu',
+    slug: 'den-san-khau',
+    icon: '🎭',
+    description: 'Moving Head, Beam',
+    color: 'from-red-500 to-red-700',
+    href: '/products?category=den-san-khau'
+  },
+  {
+    id: '6',
+    name: 'LED Decor',
+    slug: 'led-decor',
+    icon: '✨',
+    description: 'Neon Flex, LED Vẫy',
+    color: 'from-pink-500 to-pink-700',
+    href: '/products?category=led-decor'
+  },
+];
+
+// Solutions data
+const featuredSolutions = [
+  {
+    id: 1,
+    name: 'LED Phòng họp',
+    slug: 'led-phong-hop',
+    description: 'Màn hình LED cho phòng họp cao cấp, hội nghị truyền hình.',
+    category: 'space',
+    image: '/images/products/module-boe-btx-series.jpg'
+  },
+  {
+    id: 2,
+    name: 'LED Hội trường',
+    slug: 'led-hoi-truong',
+    description: 'Giải pháp màn hình LED cho hội trường, auditorium.',
+    category: 'space',
+    image: '/images/projects/project-1.jpg'
+  },
+  {
+    id: 3,
+    name: 'LED Quảng cáo',
+    slug: 'giai-phap-quang-cao',
+    description: 'Màn hình LED quảng cáo ngoài trời, billboard số.',
+    category: 'application',
+    image: '/images/projects/project-3.jpg'
+  },
+  {
+    id: 4,
+    name: 'LED Trường học',
+    slug: 'giai-phap-truong-hoc',
+    description: 'Giải pháp LED cho trường học, trung tâm đào tạo.',
+    category: 'space',
+    image: '/images/projects/project-2.jpg'
+  },
+];
+
+// News data
 const newsItems = [
   {
     id: "1",
@@ -22,7 +120,6 @@ const newsItems = [
     id: "3",
     title: "Công nghệ COB - Xu hướng mới trong ngành LED",
     date: "10/12/2025", 
-    excerpt: "Công nghệ COB mang lại chất lượng hình ảnh vượt trội",
     slug: "/kien-thuc/cong-nghe-cob",
     image: "/images/products/module-boe-btx-series.jpg"
   }
@@ -45,13 +142,54 @@ export default async function HomePage() {
       {/* Hero Slider */}
       <HeroSlider />
 
-      {/* SẢN PHẨM NỔI BẬT */}
-      <section className="section bg-slate-50">
+      {/* ======= DANH MỤC SẢN PHẨM ======= */}
+      <section className="py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center mb-14">
-            <div className="divider mx-auto"></div>
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              SẢN PHẨM NỔI BẬT
+              Danh Mục Sản Phẩm
+            </h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">
+              Luxwave cung cấp đa dạng giải pháp LED cho mọi nhu cầu
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                href={cat.href}
+                className="group"
+              >
+                <div className={`bg-gradient-to-br ${cat.color} rounded-xl p-6 text-white h-full flex flex-col items-center justify-center text-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg`}>
+                  <span className="text-4xl mb-3">{cat.icon}</span>
+                  <h3 className="font-semibold text-sm md:text-base mb-1">{cat.name}</h3>
+                  <p className="text-xs opacity-80">{cat.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link 
+              href="/products"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors"
+            >
+              Xem tất cả sản phẩm
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ======= SẢN PHẨM NỔI BẬT ======= */}
+      <section className="py-16 md:py-20 bg-slate-50">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Sản Phẩm Nổi Bật
             </h2>
             <p className="text-slate-500 max-w-2xl mx-auto">
               Giải pháp LED chất lượng cao từ các thương hiệu hàng đầu thế giới
@@ -60,238 +198,210 @@ export default async function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {featuredProducts.map((product) => (
-              <Link
-                key={product.id}
-                href={`/products/${product.slug}`}
-                className="card-premium group"
-              >
-                <div className="aspect-[4/3] bg-slate-100 relative overflow-hidden">
-                  {product.images?.[0] ? (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link 
+              href="/products"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-amber-500 text-white rounded-lg font-semibold hover:bg-amber-600 transition-colors"
+            >
+              Xem tất cả sản phẩm
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ======= GIẢI PHÁP ======= */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Giải Pháp LED
+            </h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">
+              Giải pháp tối ưu cho từng không gian và ứng dụng
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredSolutions.map((solution) => (
+              <SolutionCard key={solution.id} solution={solution} />
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link 
+              href="/solutions"
+              className="inline-flex items-center gap-2 px-6 py-3 border-2 border-slate-900 text-slate-900 rounded-lg font-medium hover:bg-slate-900 hover:text-white transition-colors"
+            >
+              Xem tất cả giải pháp
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ======= DỰ ÁN TIÊU BIỂU ======= */}
+      <section className="py-16 md:py-20 bg-slate-900">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Dự Án Tiêu Biểu
+            </h2>
+            <p className="text-slate-400 max-w-2xl mx-auto">
+              Những công trình đã hoàn thành của Luxwave
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link 
+              href="/projects"
+              className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-slate-900 transition-colors"
+            >
+              Xem tất cả dự án
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ======= THƯƠNG HIỆU ======= */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Đối Tác Chiến Lược
+            </h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">
+              Luxwave là đại lý phân phối chính hãng các thương hiệu LED hàng đầu
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-6 items-center">
+            {[
+              { name: 'NovaStar', logo: '/images/brands/novastar.png' },
+              { name: 'BOE MLED', logo: '/images/brands/boe.png' },
+              { name: 'Yellow River', logo: '/images/brands/yellow-river.png' },
+            ].map((brand, i) => (
+              <div key={i} className="flex items-center justify-center p-4 grayscale hover:grayscale-0 transition-all duration-300">
+                <img src={brand.logo} alt={brand.name} className="max-h-12 object-contain" />
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link 
+              href="/thuong-hieu"
+              className="text-amber-600 font-medium hover:text-amber-700 transition-colors"
+            >
+              Xem tất cả thương hiệu →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ======= HOẠT ĐỘNG DOANH NGHIỆP ======= */}
+      <section className="py-16 md:py-20 bg-slate-50">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Hoạt Động Doanh Nghiệp
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {newsItems.map((item) => (
+              <Link key={item.id} href={item.slug} className="group">
+                <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                  <div className="aspect-[16/10] overflow-hidden">
                     <img 
-                      src={product.images[0]} 
-                      alt={product.name} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                      src={item.image} 
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-slate-400">
-                      <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                  )}
-                  {product.brand && (
-                    <span className="absolute top-4 left-4 bg-slate-900/90 text-white text-xs font-medium px-3 py-1.5 rounded-full backdrop-blur-sm">
-                      {product.brand}
-                    </span>
-                  )}
-                </div>
-                <div className="p-5">
-                  <h3 className="font-semibold text-slate-900 mb-2 group-hover:text-amber-600 transition-colors">
-                    {product.name}
-                  </h3>
-                  {product.tech_specs?.pixel_pitch && (
-                    <p className="text-sm text-slate-400 mb-3">
-                      Pixel Pitch: {product.tech_specs.pixel_pitch}
-                    </p>
-                  )}
-                  <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-                    <span className="text-lg font-bold text-amber-600">
-                      {product.price ? `${product.price.toLocaleString('vi-VN')}đ` : 'Liên hệ'}
-                    </span>
-                    <span className="text-sm text-slate-400">/{product.unit}</span>
+                  </div>
+                  <div className="p-5">
+                    <span className="text-sm text-slate-400">{item.date}</span>
+                    <h3 className="font-semibold text-slate-900 mt-2 group-hover:text-amber-600 transition-colors">
+                      {item.title}
+                    </h3>
                   </div>
                 </div>
               </Link>
             ))}
           </div>
-          
-          <div className="text-center mt-12">
-            <Link 
-              href="/products" 
-              className="inline-flex items-center gap-2 text-slate-900 font-medium hover:text-amber-600 transition-colors"
-            >
-              Xem tất cả sản phẩm
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
+        </div>
+      </section>
+
+      {/* ======= THỐNG KÊ ======= */}
+      <section className="py-16 bg-amber-500">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+            <div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">500+</div>
+              <div className="text-amber-100">Dự án hoàn thành</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">10+</div>
+              <div className="text-amber-100">Năm kinh nghiệm</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">24/7</div>
+              <div className="text-amber-100">Hỗ trợ kỹ thuật</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">11</div>
+              <div className="text-amber-100">Thương hiệu đối tác</div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* HOẠT ĐỘNG DOANH NGHIỆP */}
-      <section className="section">
+      {/* ======= CTA ======= */}
+      <section className="py-16 md:py-20 bg-slate-900">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center mb-14">
-            <div className="divider mx-auto"></div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              HOẠT ĐỘNG DOANH NGHIỆP
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Bạn Cần Tư Vấn Về Giải Pháp LED?
             </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto">
-              Cập nhật tin tức và hoạt động của Luxwave
+            <p className="text-slate-400 mb-8">
+              Liên hệ ngay với đội ngũ chuyên gia Luxwave để được tư vấn miễn phí và nhận báo giá tốt nhất.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {newsItems.map((news) => (
-              <Link
-                key={news.id}
-                href={news.slug}
-                className="card-premium group"
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="tel:0862301919"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-500 text-white rounded-lg font-semibold hover:bg-amber-600 transition-colors"
               >
-                <div className="aspect-[16/9] bg-slate-100 overflow-hidden">
-                  <img 
-                    src={news.image} 
-                    alt={news.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
-                  />
-                </div>
-                <div className="p-5">
-                  <p className="text-xs text-slate-400 mb-2">{news.date}</p>
-                  <h3 className="font-semibold text-slate-900 group-hover:text-amber-600 transition-colors line-clamp-2">
-                    {news.title}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* DỰ ÁN TIÊU BIỂU */}
-      <section className="section bg-slate-50">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center mb-14">
-            <div className="divider mx-auto"></div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              DỰ ÁN TIÊU BIỂU
-            </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto">
-              Những dự án tiêu biểu đã hoàn thành bởi Luxwave
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {featuredProjects.map((project) => (
-              <Link
-                key={project.id}
-                href={`/projects/${project.slug}`}
-                className="card-premium group"
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                0862.30.1919
+              </a>
+              <Link 
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-slate-900 transition-colors"
               >
-                <div className="aspect-[16/10] bg-slate-100 overflow-hidden">
-                  {project.images?.[0] ? (
-                    <img 
-                      src={project.images[0]} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-slate-400">
-                      <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-                <div className="p-5">
-                  <h3 className="font-semibold text-slate-900 group-hover:text-amber-600 transition-colors line-clamp-2 mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-slate-400">
-                    {project.location} • {project.scale}
-                  </p>
-                </div>
+                Liên hệ ngay
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </Link>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link 
-              href="/projects" 
-              className="inline-flex items-center gap-2 text-slate-900 font-medium hover:text-amber-600 transition-colors"
-            >
-              Xem tất cả dự án
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ĐỐI TÁC */}
-      <section className="section">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center mb-14">
-            <div className="divider mx-auto"></div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              ĐỐI TÁC CỦA CÔNG TY
-            </h2>
-          </div>
-          
-          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16">
-            <div className="text-center group">
-              <div className="h-20 flex items-center justify-center mb-3">
-                <img 
-                  src="/images/brands/novastar.png" 
-                  alt="NovaStar" 
-                  className="h-full w-auto object-contain grayscale group-hover:grayscale-0 transition duration-300" 
-                />
-              </div>
-              <p className="text-sm font-medium text-slate-600">NovaStar</p>
-              <p className="text-xs text-slate-400 mt-1">Controller & Video Processor</p>
             </div>
-            <div className="text-center group">
-              <div className="h-20 flex items-center justify-center mb-3">
-                <img 
-                  src="/images/brands/boe.png" 
-                  alt="BOE MLED" 
-                  className="h-full w-auto object-contain grayscale group-hover:grayscale-0 transition duration-300" 
-                />
-              </div>
-              <p className="text-sm font-medium text-slate-600">BOE MLED</p>
-              <p className="text-xs text-slate-400 mt-1">Module LED & Mini LED</p>
-            </div>
-            <div className="text-center group">
-              <div className="h-20 flex items-center justify-center mb-3">
-                <img 
-                  src="/images/brands/yellow-river.png" 
-                  alt="Yellow River" 
-                  className="h-full w-auto object-contain grayscale group-hover:grayscale-0 transition duration-300" 
-                />
-              </div>
-              <p className="text-sm font-medium text-slate-600">Yellow River</p>
-              <p className="text-xs text-slate-400 mt-1">Đèn Stage & Moving Head</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-slate-900 text-white py-20 md:py-24">
-        <div className="container mx-auto px-4 md:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Cần tư vấn giải pháp LED?
-          </h2>
-          <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">
-            Liên hệ ngay để được khảo sát và báo giá miễn phí từ đội ngũ chuyên gia Luxwave
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a 
-              href="tel:0862301919" 
-              className="btn-primary flex items-center gap-2"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              0862.30.1919
-            </a>
-            <Link 
-              href="/contact" 
-              className="btn-outline"
-            >
-              Yêu cầu báo giá
-            </Link>
           </div>
         </div>
       </section>
