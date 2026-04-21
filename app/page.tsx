@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getProducts, getProjects, getCategories } from '@/lib/api';
+import HeroSlider from '@/components/HeroSlider';
 
 export const metadata = {
   title: 'Luxwave - Giải Pháp LED Cho Shop, Khách Sạn, Resort | Báo Giá 2026',
@@ -17,33 +18,8 @@ export default async function HomePage() {
 
   return (
     <main>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl">
-            <h1 className="text-5xl font-bold mb-6">
-              Giải pháp LED hàng đầu Việt Nam
-            </h1>
-            <p className="text-xl text-blue-100 mb-8">
-              Chuyên cung cấp và thi công màn hình LED, đèn chiếu logo GOBO, LED trang trí cho shop, khách sạn, resort, nhà xưởng.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link 
-                href="/products"
-                className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition"
-              >
-                Xem sản phẩm
-              </Link>
-              <Link 
-                href="/contact"
-                className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
-              >
-                Yêu cầu báo giá
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Slider */}
+      <HeroSlider />
 
       {/* Categories */}
       <section className="py-16 bg-gray-50">
