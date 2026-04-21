@@ -143,6 +143,27 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Partners */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-8">Được tin tưởng bởi</h2>
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+            <div className="text-center">
+              <img src="/images/brands/novastar.png" alt="NovaStar" className="h-12 mx-auto mb-2" />
+              <p className="text-sm text-gray-500">NovaStar</p>
+            </div>
+            <div className="text-center">
+              <img src="/images/brands/boe.png" alt="BOE MLED" className="h-12 mx-auto mb-2" />
+              <p className="text-sm text-gray-500">BOE MLED</p>
+            </div>
+            <div className="text-center">
+              <img src="/images/brands/yellow-river.png" alt="Yellow River" className="h-12 mx-auto mb-2" />
+              <p className="text-sm text-gray-500">Yellow River</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
